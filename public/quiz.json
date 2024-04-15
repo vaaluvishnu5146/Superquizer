@@ -1,0 +1,29 @@
+{
+  "data": {
+    "quizId": 1,
+    "quizName": "Basic React Quiz",
+    "quizDescription": "Basic react quiz description goes here",
+    "questions": [
+      {
+        "id": 1,
+        "title": "Title 1",
+        "options": [
+          { "title": "Option 1", "isAnswer": false },
+          { "title": "Option 2", "isAnswer": false },
+          { "title": "Option 3", "isAnswer": false },
+          { "title": "Option 4", "isAnswer": true }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Title 2",
+        "options": [
+          { "title": "Option 1", "isAnswer": true },
+          { "title": "Option 2", "isAnswer": false },
+          { "title": "Option 3", "isAnswer": false },
+          { "title": "Option 4", "isAnswer": false }
+        ]
+      }
+    ]
+  }
+}
