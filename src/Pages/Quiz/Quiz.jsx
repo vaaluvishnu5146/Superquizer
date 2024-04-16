@@ -2,10 +2,41 @@ import Button from "react-bootstrap/Button";
 import { useQuiz } from "../../Context/QuizContext";
 
 export default function Quiz() {
-  const { quiz = {}, onGoingQuiz = {}, changeQuestion = () => {} } = useQuiz();
-  console.log(quiz?.questions, onGoingQuiz);
+  const {
+    quiz = {},
+    onGoingQuiz = {},
+    changeQuestion = () => {},
+    handleQuestionResponse = () => {},
+  } = useQuiz();
   const questions = quiz?.questions;
-  const question = (questions && questions[onGoingQuiz.currentQuestion]) || {};
+  const { currentQuestion = {}, questionsAnswered = [] } = onGoingQuiz;
+  const question = (questions && questions[currentQuestion]) || {};
+
+  function handleOptionSelect(questionId = 0, optionId = "") {
+    const attemptedQuestion = questions.find(
+      (question) => question.id === questionId
+    );
+    const isCorrect = attemptedQuestion.options.find(
+      (option) => option.id === optionId
+    ).isAnswer;
+    if (attemptedQuestion) {
+      let response = {
+        questionId,
+        optionId,
+        isCorrect,
+      };
+      handleQuestionResponse(response);
+    }
+  }
+
+  function findCorrectOption(questionId) {
+    let optionId =
+      questionsAnswered.length > 0 &&
+      questionsAnswered.find((answer) => answer.questionId === questionId)
+        ?.optionId;
+    return optionId;
+  }
+
   return (
     <div className="h-full">
       <div className="nav"></div>
@@ -13,37 +44,41 @@ export default function Quiz() {
         <div className="quizSidebar"></div>
         <div className="quizContentContainer">
           <div className="quizForm">
-            <h5>Question 1 of {quiz?.questions?.length}</h5>
+            <h6>
+              Question {currentQuestion + 1} of {quiz?.questions?.length}
+            </h6>
             <h1 className="mb-5">{question?.title || "NA"}</h1>
             <div className="d-flex flex-column quizOptions mb-4">
               {question?.options?.map((option, index) => (
                 <Button
-                  key={`${index}-${option.title}`}
-                  className="optionCta selected"
+                  key={`${index}-${option.title}-${option.id}`}
+                  className={`optionCta ${
+                    findCorrectOption(question?.id) === option.id && "selected"
+                  }`}
                   variant="light"
+                  onClick={() => handleOptionSelect(question.id, option.id)}
                 >
                   {option.title}
                 </Button>
               ))}
             </div>
-            <div className="quizOptions d-grid mb-4">
-              <Button variant="success" size="lg">
-                Submit
-              </Button>{" "}
-            </div>
             <div className="quizFooter d-flex justify-content-between">
               <Button
                 variant="outline-primary"
                 onClick={() => changeQuestion("decrement")}
+                disabled={currentQuestion === 0}
               >
                 Prev
               </Button>{" "}
               <Button
                 variant="outline-primary"
                 onClick={() => changeQuestion("increment")}
+                disabled={
+                  onGoingQuiz?.currentQuestion === quiz?.questions?.length - 1
+                }
               >
                 Next
-              </Button>{" "}
+              </Button>
             </div>
           </div>
         </div>

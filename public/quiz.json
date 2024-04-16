@@ -1,29 +1,37 @@
 {
-  "data": {
-    "quizId": 1,
-    "quizName": "Basic React Quiz",
-    "quizDescription": "Basic react quiz description goes here",
-    "questions": [
-      {
-        "id": 1,
-        "title": "Title 1",
-        "options": [
-          { "title": "Option 1", "isAnswer": false },
-          { "title": "Option 2", "isAnswer": false },
-          { "title": "Option 3", "isAnswer": false },
-          { "title": "Option 4", "isAnswer": true }
-        ]
-      },
-      {
-        "id": 2,
-        "title": "Title 2",
-        "options": [
-          { "title": "Option 1", "isAnswer": true },
-          { "title": "Option 2", "isAnswer": false },
-          { "title": "Option 3", "isAnswer": false },
-          { "title": "Option 4", "isAnswer": false }
-        ]
-      }
-    ]
-  }
+  "quizId": 1,
+  "quizName": "Basic React Quiz",
+  "quizDescription": "Basic react quiz description goes here",
+  "questions": [
+    {
+      "id": 1,
+      "title": "Which one is a Web Development Library?",
+      "options": [
+        { "title": "Angular", "id": 1, "isAnswer": false },
+        { "title": "Stellar", "id": 2, "isAnswer": false },
+        { "title": "Eclipse", "id": 3, "isAnswer": false },
+        { "title": "React", "id": 4, "isAnswer": true }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Which a Valid Hooks?",
+      "options": [
+        { "title": "useHook()", "id": 1, "isAnswer": false },
+        { "title": "useState()", "id": 2, "isAnswer": true },
+        { "title": "useEffector()", "id": 3, "isAnswer": false },
+        { "title": "useId()", "id": 4, "isAnswer": false }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Which is Template Engine used in React?",
+      "options": [
+        { "title": "EJS", "id": 1, "isAnswer": false },
+        { "title": "Pug", "id": 2, "isAnswer": false },
+        { "title": "HTMX", "id": 3, "isAnswer": false },
+        { "title": "JSX", "id": 4, "isAnswer": true }
+      ]
+    }
+  ]
 }
