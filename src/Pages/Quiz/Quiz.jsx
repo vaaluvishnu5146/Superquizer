@@ -39,15 +39,23 @@ export default function Quiz() {
 
   return (
     <div className="h-full">
-      <div className="nav"></div>
       <div className="quizContainer d-flex">
-        <div className="quizSidebar"></div>
+        <div className="quizSidebar d-flex justify-content-center">
+          <div className="logoContainer">
+            <img
+              width={50}
+              src="https://play-lh.googleusercontent.com/VpIV5wjUERZ-dTZxuIyiqv8XkZqbcgQTxqNJnwCcszLPGezPUEY-PSTxKySq-qhf"
+              alt="logo"
+            />
+          </div>
+          <div className="questionsList"></div>
+        </div>
         <div className="quizContentContainer">
           <div className="quizForm">
             <h6>
               Question {currentQuestion + 1} of {quiz?.questions?.length}
             </h6>
-            <h1 className="mb-5">{question?.title || "NA"}</h1>
+            <h3 className="mb-4">{question?.title || "NA"}</h3>
             <div className="d-flex flex-column quizOptions mb-4">
               {question?.options?.map((option, index) => (
                 <Button
@@ -86,7 +94,3 @@ export default function Quiz() {
     </div>
   );
 }
-
-// 1. Navbar
-//   2. Sidebar
-//   3. ContentArea - Question, Options
