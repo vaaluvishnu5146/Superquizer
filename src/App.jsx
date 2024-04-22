@@ -8,6 +8,7 @@ import Index from "./Pages/Quiz";
 import Login from "./Pages/Authentication/Login";
 import Signup from "./Pages/Authentication/Signup";
 import Quizes from "./Pages/Quiz/Quizes";
+import Tasks from "./Pages/Tasks/Tasks";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route Component={Quiz} path="/quiz/:quizId/start/" />
         <Route Component={QuizExtro} path="/quiz/:quizId/result" />
       </Route>
+      <Route Component={Tasks} path="/tasks" />
     </Routes>
   );
 }

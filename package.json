@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4",
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
