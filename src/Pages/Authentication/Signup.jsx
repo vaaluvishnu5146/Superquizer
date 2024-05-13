@@ -1,33 +1,64 @@
 import Button from "react-bootstrap/Button";
 import { Formik } from "formik";
 import Spinner from "react-bootstrap/Spinner";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const navigator = useNavigate();
   return (
     <div className="container h-full d-flex align-items-center justify-content-center">
       <Formik
         initialValues={{
           email: "",
+          name: "",
           password: "",
+          confirmPassword: "",
+          phoneNumber: "",
         }}
         validate={(values) => {
           const errors = {};
-          if (!values.email) {
+          if (!values.name) {
+            errors.name = "Required";
+          } else if (values.name.length < 10) {
+            errors.name = "Account name should be length of 10";
+          } else if (!values.email) {
             errors.email = "Required";
           } else if (
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
           ) {
             errors.email = "Invalid email address";
+          } else if (!values.phoneNumber) {
+            errors.phoneNumber = "required";
+          } else if (values.phoneNumber.length != 10) {
+            errors.phoneNumber = "Phone number is invalid";
           } else if (!values.password) {
             errors.password = "Required";
+          } else if (values.password != values.confirmPassword) {
+            errors.confirmPassword = "Password doesn't match";
           }
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 5000);
+          setSubmitting(true);
+          fetch("http://localhost:5000/api/auth/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              if (result) {
+                navigator("/");
+              }
+              setSubmitting(false);
+            })
+            .catch((error) => {
+              setSubmitting(false);
+              console.log(error);
+            });
+          // setSubmitting(false);
         }}
       >
         {({
@@ -43,6 +74,18 @@ export default function Signup() {
               <div className="card" style={{ width: 350 }}>
                 <div className="card-body">
                   <div className="inputContainer">
+                    <label htmlFor="email">Account Name</label>
+                    <input
+                      id="name"
+                      name="name"
+                      placeholder="Enter your Name"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.name}
+                    />
+                    {errors.name && <p className="error">{errors.name}</p>}
+                  </div>
+                  <div className="inputContainer">
                     <label htmlFor="email">Email Address</label>
                     <input
                       id="email"
@@ -55,8 +98,23 @@ export default function Signup() {
                     {errors.email && <p className="error">{errors.email}</p>}
                   </div>
                   <div className="inputContainer">
+                    <label htmlFor="phoneNumber">Phone Number</label>
+                    <input
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="Enter your Phone Number"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.phoneNumber}
+                    />
+                    {errors.phoneNumber && (
+                      <p className="error">{errors.phoneNumber}</p>
+                    )}
+                  </div>
+                  <div className="inputContainer">
                     <label htmlFor="password">Password</label>
                     <input
+                      type="password"
                       id="password"
                       name="password"
                       placeholder="Enter your Password"
@@ -68,9 +126,24 @@ export default function Signup() {
                       <p className="error">{errors.password}</p>
                     )}
                   </div>
+                  <div className="inputContainer">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Enter your Confirm Password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.confirmPassword}
+                    />
+                    {errors.confirmPassword && (
+                      <p className="error">{errors.confirmPassword}</p>
+                    )}
+                  </div>
                   <div className="d-grid">
                     <Button type="submit" variant="primary" size="md">
-                      Login
+                      Signup
                     </Button>
                   </div>
                 </div>
